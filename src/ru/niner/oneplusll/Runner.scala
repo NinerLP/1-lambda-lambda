@@ -8,10 +8,11 @@ object Runner extends App {
   val numberOfNodes = 100
   val numberOfEdges = 5000
   val maximumCapacity = 10000
-  val lambdaValues = Array(8,25)
+  val lambdaValues = Array(8,15,25)
   val isAcyclic = true
   val computationsLimit = 500000
-  val numberOfLaunches = 3
+  val numberOfLaunches = 8
+  val adaptationCoefficient = 1.5
   //val onePlusTwoLambdaProbabilities = Array(1.0/numberOfEdges)
 
   val runs = new util.ArrayList[Runnable]()
@@ -22,6 +23,12 @@ object Runner extends App {
       isAcyclic, computationsLimit, idAssigner.getNextID))
     runs.add(new OnePlusOneRunnable(numberOfNodes, numberOfEdges, maximumCapacity, new NGPAlgorithmFitness(new DinicSlow()),
       isAcyclic, computationsLimit, idAssigner.getNextID))
+
+    runs.add(new OnePlusLambdaLambdaAdaptiveRunnable(numberOfNodes,numberOfEdges, maximumCapacity, adaptationCoefficient,
+      new NGPAlgorithmFitness(new Dinic()), isAcyclic, computationsLimit, idAssigner.getNextID))
+    runs.add(new OnePlusLambdaLambdaAdaptiveRunnable(numberOfNodes,numberOfEdges, maximumCapacity, adaptationCoefficient,
+      new NGPAlgorithmFitness(new DinicSlow()), isAcyclic, computationsLimit, idAssigner.getNextID))
+
 
     for (lambda <- lambdaValues) {
       runs.add(new OnePlusLambdaLambdaRunnable(numberOfNodes, numberOfEdges, maximumCapacity, lambda,
@@ -91,5 +98,16 @@ class OnePlusLambdaLambdaRunnable(nodeNumber : Int, edgeNumber : Int, maximumCap
     new OnePlusLambdaLambda(nodeNumber, edgeNumber, maximumCapacity, lambda, mutationProbability,
       crossoverProbabilityForA, fitnessFunction, isAcyclic, computationsLimit, runID).run()
     println("Completed 1+LL RunID: " + runID)
+  }
+}
+
+class OnePlusLambdaLambdaAdaptiveRunnable(nodeNumber : Int, edgeNumber : Int, maximumCapacity : Int,
+                                          adaptationCoefficient : Double, fitnessFunction : FitnessFunction,
+                                          isAcyclic : Boolean, computationsLimit : Int, runID : Int) extends Runnable {
+  def run(): Unit = {
+    println("Started 1+LL Adaptive RunID: " + runID)
+    new OnePlusLambdaLambdaAdaptive(nodeNumber, edgeNumber, maximumCapacity, adaptationCoefficient,
+      fitnessFunction, isAcyclic, computationsLimit, runID).run()
+    println("Completed 1+LL Adaptive RunIDL: " + runID)
   }
 }
