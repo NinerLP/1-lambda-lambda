@@ -21,6 +21,7 @@ class OnePlusOne(val nodeNumber : Int, val edgeNumber : Int, val maximumCapacity
     file.createNewFile()
     log = new PrintWriter(file,"UTF-8")
 
+    log.println("computation fitness")
     log.println(computationsCount + " " + parentGraph.fitnessValue)
   }
 

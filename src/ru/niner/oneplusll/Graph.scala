@@ -43,6 +43,19 @@ object Graph {
     }
     graphC
   }
+
+  def singleCross(graphA : Graph, graphB : Graph, l : Int) : Graph = {
+    val graphC = new Graph(graphA.nodeNumber, graphA.edgeNumber, graphA.maximumCapacity)
+    for (i <- 0 until l) {
+      val tempEdge = graphA.edges.get(i)
+      graphC.edges.add(new Edge(tempEdge.start,tempEdge.end,tempEdge.capacity))
+    }
+    for (i <- l until graphA.edgeNumber) {
+      val tempEdge = graphB.edges.get(i)
+      graphC.edges.add(new Edge(tempEdge.start,tempEdge.end,tempEdge.capacity))
+    }
+    graphC
+  }
 }
 
 

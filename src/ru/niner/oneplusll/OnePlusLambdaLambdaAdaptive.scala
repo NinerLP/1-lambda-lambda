@@ -25,6 +25,7 @@ class OnePlusLambdaLambdaAdaptive(val nodeNumber : Int, val edgeNumber : Int, va
     file.createNewFile()
     log = new PrintWriter(file,"UTF-8")
 
+    log.println("computation fitness lambda usedlambda")
     log.println(computationsCount + " " + parentGraph.fitnessValue + " " + lambdaPar + " " + Math.max(lambdaPar.toInt,1))
   }
 

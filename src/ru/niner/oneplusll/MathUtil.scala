@@ -1,7 +1,6 @@
 package ru.niner.oneplusll
 
 import java.util
-
 import scala.util.Random
 
 object MathUtil {

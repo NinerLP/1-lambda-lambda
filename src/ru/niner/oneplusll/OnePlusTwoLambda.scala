@@ -22,6 +22,7 @@ class OnePlusTwoLambda(val nodeNumber : Int, val edgeNumber : Int, val maximumCa
     file.createNewFile()
     log = new PrintWriter(file,"UTF-8")
 
+    log.println("computation fitness")
     log.println(computationsCount + " " + parentGraph.fitnessValue)
   }
 
