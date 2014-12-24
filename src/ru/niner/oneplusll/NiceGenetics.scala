@@ -40,16 +40,35 @@ class NiceGenetics(val nodeNumber : Int, val edgeNumber : Int, val maximumCapaci
     log.println(computationsCount + " " + currentBest())
   }
 
+  private def tourney() : util.ArrayList[Int] = {
+    val pos8 = MathUtil.getChangePositions(8,generationSize)
+    val pos4 = new util.ArrayList[Int]()
+
+    for (i <- 0 until 8 by 2) {
+      if (parentGraphs.get(pos8.get(i)).fitnessValue >= parentGraphs.get(pos8.get(i)).fitnessValue) {
+        if (Random.nextFloat() < 0.9) pos4.add(pos8.get(i)) else pos4.add(pos8.get(i+1))
+      } else {
+        if (Random.nextFloat() < 0.9) pos4.add(pos8.get(i + 1)) else pos4.add(pos8.get(i))
+      }
+    }
+
+    val pos2 = new util.ArrayList[Int]()
+    for (i <- 0 until 4 by 2) {
+      if (parentGraphs.get(pos4.get(i)).fitnessValue >= parentGraphs.get(pos4.get(i)).fitnessValue) {
+        if (Random.nextFloat() < 0.9) pos2.add(pos4.get(i)) else pos2.add(pos4.get(i+1))
+      } else {
+        if (Random.nextFloat() < 0.9) pos2.add(pos4.get(i + 1)) else pos2.add(pos4.get(i))
+      }
+    }
+    pos2
+  }
+
   private def crossover() : Unit = {
     crossoverGraphs.clear()
     for (i <- 0 until crossoverSize) {
-      val numA = Random.nextInt(generationSize)
-      var numB = Random.nextInt(generationSize-1)
-      if (numB >= numA) {
-        numB += 1
-      }
-      val graphA = parentGraphs.get(numA)
-      val graphB = parentGraphs.get(numB)
+      val pos = tourney()
+      val graphA = parentGraphs.get(pos.get(0))
+      val graphB = parentGraphs.get(pos.get(1))
       val l = Random.nextInt(edgeNumber-1) + 1
       crossoverGraphs.add(Graph.singleCross(graphA,graphB,l))
       crossoverGraphs.add(Graph.singleCross(graphB,graphA,l))
