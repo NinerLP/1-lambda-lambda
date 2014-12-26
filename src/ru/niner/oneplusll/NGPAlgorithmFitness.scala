@@ -12,7 +12,7 @@ class NGPAlgorithmFitness(override val solver : MaxFlowSolver) extends FitnessFu
   var bestGraph : Graph = null
   var bestAlgorithmName : String = null
   override val target = -1
-  val timelimit = 100L;
+  val timelimit = 0;
   {
     bestValues.put("edgeCount",0L)
   }

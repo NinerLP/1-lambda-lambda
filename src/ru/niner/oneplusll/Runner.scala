@@ -11,7 +11,7 @@ object Runner extends App {
   val lambdaValues = Array(8,16,25,50)
   val isAcyclic = true
   val computationsLimit = 500000
-  val numberOfLaunches = 2
+  val numberOfLaunches = 1
   val adaptationCoefficient = 1.5
   //val onePlusTwoLambdaProbabilities = Array(1.0/numberOfEdges)
 
