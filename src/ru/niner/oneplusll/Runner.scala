@@ -8,10 +8,10 @@ object Runner extends App {
   val numberOfNodes = 100
   val numberOfEdges = 5000
   val maximumCapacity = 10000
-  val lambdaValues = Array(8,16,25,50)
+  val lambdaValues = Array(16,25)
   val isAcyclic = true
   val computationsLimit = 500000
-  val numberOfLaunches = 1
+  val numberOfLaunches = 2
   val adaptationCoefficient = 1.5
   //val onePlusTwoLambdaProbabilities = Array(1.0/numberOfEdges)
 
@@ -20,8 +20,12 @@ object Runner extends App {
 
   for (i <- 0 until numberOfLaunches) {
 
+    //runs.add(new NiceGeneticsRunnable(numberOfNodes,numberOfEdges,maximumCapacity,100,
+    //  45,new NGPAlgorithmFitness(new ImprovedShortestPath()),isAcyclic,computationsLimit,idAssigner.getNextID))
+
     runs.add(new NiceGeneticsRunnable(numberOfNodes,numberOfEdges,maximumCapacity,100,
-      45,new NGPAlgorithmFitness(new ImprovedShortestPath()),isAcyclic,computationsLimit,idAssigner.getNextID))
+      45,new NGPAlgorithmFitness(new Dinic()),isAcyclic,computationsLimit,idAssigner.getNextID))
+
 
     //runs.add(new OnePlusOneRunnable(numberOfNodes, numberOfEdges, maximumCapacity, new NGPAlgorithmFitness(new ImprovedShortestPath()),
     //  isAcyclic, computationsLimit, idAssigner.getNextID))
@@ -29,7 +33,7 @@ object Runner extends App {
     //  isAcyclic, computationsLimit, idAssigner.getNextID))
 
     //runs.add(new OnePlusLambdaLambdaAdaptiveRunnable(numberOfNodes,numberOfEdges, maximumCapacity, adaptationCoefficient,
-    //  new NGPAlgorithmFitness(new ImprovedShortestPath()), isAcyclic, computationsLimit, idAssigner.getNextID))
+    //  new NGPAlgorithmFitness(new Dinic()), isAcyclic, computationsLimit, idAssigner.getNextID))
     //runs.add(new OnePlusLambdaLambdaAdaptiveRunnable(numberOfNodes,numberOfEdges, maximumCapacity, adaptationCoefficient,
     //  new NGPAlgorithmFitness(new DinicSlow()), isAcyclic, computationsLimit, idAssigner.getNextID))
 
@@ -37,6 +41,10 @@ object Runner extends App {
     //for (lambda <- lambdaValues) {
       //runs.add(new OnePlusLambdaLambdaRunnable(numberOfNodes, numberOfEdges, maximumCapacity, lambda,
       //  1.0*lambda/numberOfEdges, 1.0/lambda, new NGPAlgorithmFitness(new ImprovedShortestPath()),
+      //  isAcyclic, computationsLimit, idAssigner.getNextID))
+
+      //runs.add(new OnePlusLambdaLambdaRunnable(numberOfNodes, numberOfEdges, maximumCapacity, lambda,
+      //  1.0*lambda/numberOfEdges, 1.0/lambda, new NGPAlgorithmFitness(new Dinic()),
       //  isAcyclic, computationsLimit, idAssigner.getNextID))
 
       //runs.add(new OnePlusTwoLambdaRunnable(numberOfNodes, numberOfEdges, maximumCapacity, lambda,

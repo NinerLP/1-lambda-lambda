@@ -12,9 +12,10 @@ class NGPAlgorithmFitness(override val solver : MaxFlowSolver) extends FitnessFu
   var bestGraph : Graph = null
   var bestAlgorithmName : String = null
   override val target = -1
-  val timelimit = 0;
+  val timelimit = 0
+  val OPTIMIZEON = "edgeCount";
   {
-    bestValues.put("edgeCount",0L)
+    bestValues.put(OPTIMIZEON,0L)
   }
 
   def apply(graph : Graph, algorithmName : String) : Long = {
@@ -29,13 +30,13 @@ class NGPAlgorithmFitness(override val solver : MaxFlowSolver) extends FitnessFu
 
     val results : util.Map[String, JLong] = solver.solve(ngpedges, 0, graph.nodeNumber - 1, timelimit)
 
-    if (results.get("edgeCount") >= bestValues.get("edgeCount")) {
+    if (results.get(OPTIMIZEON) >= bestValues.get(OPTIMIZEON)) {
       bestValues = results
       bestGraph = graph
       bestAlgorithmName = algorithmName
     }
 
-    results.get("edgeCount")
+    results.get(OPTIMIZEON)
   }
 
   def dumpResults(runID : Int) : Unit = {
